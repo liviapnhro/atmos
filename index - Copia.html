@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Atmos</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+</head>
+
+<body>
+
+  <header class="navbar">
+
+    <div class="logo-text">
+      atmos
+    </div>
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Pesquisar cidades, países..."
+    >
+
+    <div class="menu">
+
+      <button class="account-btn">
+        Conta
+      </button>
+
+    </div>
+
+  </header>
+
+  <div class="map-container">
+
+    <div class="info-top">
+      Clique em um pin para abrir informações
+    </div>
+
+    <div id="map"></div>
+
+    <div
+      class="floating-card"
+      id="floatingCard"
+    >
+
+      <button id="closeCard">
+        ✕
+      </button>
+
+      <img
+        id="flag"
+        src=""
+        alt="Bandeira"
+      >
+
+      <h1 id="countryName">
+        País
+      </h1>
+
+      <div class="card-grid">
+
+        <div class="box">
+          <span>Capital</span>
+          <p id="capital">-</p>
+        </div>
+
+        <div class="box">
+          <span>População</span>
+          <p id="population">-</p>
+        </div>
+
+        <div class="box">
+          <span>Região</span>
+          <p id="region">-</p>
+        </div>
+
+        <div class="box">
+          <span>Temperatura</span>
+          <p id="temperature">-</p>
+        </div>
+
+        <div class="box">
+          <span>Clima</span>
+          <p id="weather">-</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
