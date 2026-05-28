@@ -1,0 +1,339 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#0b1018;
+}
+
+body{
+  position:relative;
+}
+
+.navbar{
+
+  width:100%;
+  height:85px;
+
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  z-index:9999;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 35px;
+
+  background:rgba(10,15,25,0.75);
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.05);
+
+}
+
+.logo-text{
+
+  font-size:34px;
+
+  font-weight:700;
+
+  letter-spacing:2px;
+
+  color:#60a5fa;
+
+  font-family:
+    "Segoe UI",
+    sans-serif;
+
+}
+#searchInput{
+
+  width:45%;
+  height:48px;
+
+  border:none;
+  outline:none;
+
+  border-radius:30px;
+
+  background:#1f2937;
+
+  color:white;
+
+  padding:0 20px;
+
+  font-size:15px;
+
+}
+
+#searchInput::placeholder{
+  color:#9ca3af;
+}
+
+.account-btn{
+
+  border:none;
+
+  background:#2563eb;
+
+  color:white;
+
+  padding:12px 22px;
+
+  border-radius:14px;
+
+  cursor:pointer;
+
+}
+
+.map-container{
+
+  width:100%;
+  height:100vh;
+
+  position:relative;
+
+}
+
+#map{
+
+  width:100%;
+  height:100%;
+
+}
+
+/* INFO */
+
+.info-top{
+
+  position:absolute;
+
+  top:110px;
+  left:20px;
+
+  z-index:999;
+
+  background:rgba(17,24,39,0.92);
+
+  color:white;
+
+  padding:14px 20px;
+
+  border-radius:16px;
+
+  backdrop-filter:blur(10px);
+
+}
+
+/* CARD */
+
+.floating-card{
+
+  position:absolute;
+
+  bottom:30px;
+  left:50%;
+
+  transform:
+    translateX(-50%)
+    translateY(40px);
+
+  width:430px;
+
+  background:rgba(17,24,39,0.96);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  border-radius:30px;
+
+  padding:22px;
+
+  color:white;
+
+  z-index:9999;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:0.4s;
+
+}
+
+.floating-card.active{
+
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(0px);
+
+  pointer-events:auto;
+
+}
+
+.floating-card img{
+
+  width:100%;
+  height:190px;
+
+  object-fit:cover;
+
+  border-radius:18px;
+
+  margin-bottom:15px;
+
+}
+
+.floating-card h1{
+
+  margin-bottom:18px;
+
+  font-size:28px;
+
+}
+
+.card-grid{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:15px;
+
+}
+
+.box{
+
+  background:rgba(255,255,255,0.05);
+
+  padding:14px;
+
+  border-radius:18px;
+
+}
+
+.box span{
+
+  color:#9ca3af;
+
+  font-size:13px;
+
+}
+
+.box p{
+
+  margin-top:6px;
+
+  font-size:16px;
+
+  font-weight:bold;
+
+}
+
+#closeCard{
+
+  position:absolute;
+
+  top:15px;
+  right:15px;
+
+  width:35px;
+  height:35px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:#ef4444;
+
+  color:white;
+
+  cursor:pointer;
+
+}
+
+.leaflet-control-attribution,
+.leaflet-control-zoom{
+  display:none;
+}
+
+/* PIN MODERNO */
+
+.custom-pin{
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+
+.pin-glow{
+
+  position:absolute;
+
+  width:28px;
+  height:28px;
+
+  border-radius:50%;
+
+  background:
+    rgba(96,165,250,0.25);
+
+  animation:
+    pulse 2s infinite;
+
+}
+
+.pin-core{
+
+  width:14px;
+  height:14px;
+
+  border-radius:50%;
+
+  background:#60a5fa;
+
+  border:3px solid white;
+
+  box-shadow:
+    0 0 18px rgba(96,165,250,0.9);
+
+  position:relative;
+
+  z-index:2;
+
+}
+
+@keyframes pulse{
+
+  0%{
+
+    transform:scale(1);
+
+    opacity:1;
+
+  }
+
+  100%{
+
+    transform:scale(2.4);
+
+    opacity:0;
+
+  }
+
+}
