@@ -337,3 +337,44 @@ body{
   }
 
 }
+
+.custom-pin{
+  background:none;
+  border:none;
+}
+
+.pin-wrapper{
+  position:relative;
+  width:24px;
+  height:24px;
+}
+
+.pin-glow{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:rgba(96,165,250,.35);
+  animation:pulse 2s infinite;
+}
+
+.pin-core{
+  position:absolute;
+  top:6px;
+  left:6px;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#60a5fa;
+  border:2px solid white;
+}
+
+@keyframes pulse{
+  0%{
+    transform:scale(1);
+    opacity:.8;
+  }
+  100%{
+    transform:scale(2.2);
+    opacity:0;
+  }
+}
