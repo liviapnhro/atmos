@@ -265,16 +265,13 @@ async function loadInfo(place){
 
   try{
 
-    const countryRes =
-      await fetch(
-        `https://restcountries.com/v3.1/name/${place.country}?fullText=true`
-      );
+    const countryRes = await fetch(
+  `https://restcountries.com/v3.1/name/${encodeURIComponent(place.country)}`
+);
 
-    const countryData =
-      await countryRes.json();
+const countryData = await countryRes.json();
 
-    const data =
-      countryData[0];
+const data = countryData[0];
 
     countryName.innerText =
       data.name.common;
