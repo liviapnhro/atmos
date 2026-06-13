@@ -2,7 +2,7 @@
   "name": "Atmos",
   "short_name": "Atmos",
   "description": "Plataforma interativa de exploração global e dados climáticos.",
-  "start_url": "./index.html",
+  "start_url": "/atmos/",
   "display": "standalone",
   "background_color": "#0b1018",
   "theme_color": "#0b1018",
