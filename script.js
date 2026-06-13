@@ -106,18 +106,15 @@ async function loadInfo(place) {
       duration: 1.5
     });
 
-  } catch (error) {
+  catch(error){
 
-    console.error(error);
+  alert(error.message);
 
-    countryName.innerText = "Erro ao carregar";
-    capital.innerText = "-";
-    population.innerText = "-";
-    region.innerText = "-";
-    temperature.innerText = "-";
-    weather.innerText = "-";
+  console.error(error);
 
-  }
+  countryName.innerText = "Erro ao carregar";
+
+}
 
 }
 
