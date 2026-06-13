@@ -1,4 +1,6 @@
-﻿const WEATHER_API = "5d925fb1befab307b64caa3321d983d2";
+﻿
+alert ("JS CARREGOU");
+const WEATHER_API = "5d925fb1befab307b64caa3321d983d2";
 
 const map = L.map("map", {
   zoomControl: true,
@@ -105,16 +107,15 @@ async function loadInfo(place) {
     map.flyTo([place.lat, place.lon], 4, {
       duration: 1.5
     });
+  } catch(error){
 
-  catch(error){
+    alert(error.message);
 
-  alert(error.message);
+    console.error(error);
 
-  console.error(error);
+    countryName.innerText = "Erro ao carregar";
 
-  countryName.innerText = "Erro ao carregar";
-
-}
+  }
 
 }
 
