@@ -1,119 +1,172 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATMOS V2 — Telemetria Meteorológica</title>
+    
+    <!-- Leaflet CSS (Mapas) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    
+    <!-- Seu arquivo CSS local -->
+    <link rel="stylesheet" href="style.css">
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Atmos</title>
-
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b1018">
-
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet/dist/leaflet.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0b0f">
+<link rel="icon" href="icons/favicon.png">
 </head>
-
 <body>
 
-  <header class="navbar">
-
-    <div class="logo-text">
-      atmos
-    </div>
-
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Pesquisar cidades, países..."
-    >
-
-    <div class="menu">
-
-      <button class="account-btn">
-        Conta
-      </button>
-
-    </div>
-
-  </header>
-
-  <div class="map-container">
-
-    <div class="info-top">
-      Clique em um pin para abrir informações
-    </div>
-
+    <!-- MAPA CORE -->
     <div id="map"></div>
 
-    <div
-      class="floating-card"
-      id="floatingCard"
-    >
-
-      <button id="closeCard">
-        ✕
-      </button>
-
-      <img
-        id="flag"
-        src=""
-        alt="Bandeira"
-      >
-
-      <h1 id="countryName">
-        País
-      </h1>
-
-      <div class="card-grid">
-
-        <div class="box">
-          <span>Capital</span>
-          <p id="capital">-</p>
+    <!-- HEADER PRINCIPAL -->
+    <header class="main-header glass-panel">
+        <div class="logo">
+            <i data-lucide="globe"></i>
+            <span>ATMOS <strong>V2</strong></span>
+        </div>
+        
+        <div class="search-container">
+            <i data-lucide="search" class="search-icon"></i>
+            <input type="text" id="global-search" placeholder="Buscar nó geográfico... (Ctrl + K)">
+            <span class="keyboard-shortcut">⌘K</span>
+            
+            <!-- Dropdown de Sugestões -->
+            <div id="search-dropdown" class="search-dropdown glass-panel hidden"></div>
         </div>
 
-        <div class="box">
-          <span>População</span>
-          <p id="population">-</p>
+        <button id="toggle-favorites-panel" class="icon-btn">
+            <i data-lucide="layers"></i>
+            <div id="fav-count-badge" class="badge hidden">0</div>
+        </button>
+    </header>
+
+    <!-- SIDEBAR ESQUERDA: INFORMAÇÕES DO HUB -->
+    <aside id="info-sidebar" class="sidebar info-sidebar glass-panel sidebar-collapsed">
+        <!-- Skeleton Loading (Aparece enquanto carrega) -->
+        <div id="sidebar-skeleton" class="skeleton-container">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-box"></div>
+            <div class="skeleton skeleton-box"></div>
         </div>
 
-        <div class="box">
-          <span>Região</span>
-          <p id="region">-</p>
+        <!-- Conteúdo Ativo -->
+        <div id="sidebar-content" class="hidden">
+            <div class="sidebar-header">
+                <div class="location-header">
+                    <img id="panel-flag" src="" alt="Bandeira" class="country-flag">
+                    <div>
+                        <h2 id="panel-location-name">--</h2>
+                        <span id="panel-location-sub">--</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="action-fav-btn" class="icon-btn"><i data-lucide="star"></i></button>
+                    <button id="close-sidebar-btn" class="icon-btn"><i data-lucide="x"></i></button>
+                </div>
+            </div>
+
+            <!-- Navegação por Abas (Tabs) -->
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="geo"><i data-lucide="info"></i>Geografia</button>
+                <button class="tab-btn" data-tab="weather"><i data-lucide="cloud-sun"></i>Clima</button>
+                <button class="tab-btn" data-tab="analytics"><i data-lucide="line-chart"></i>Analytics</button>
+            </nav>
+
+            <!-- Container das Abas -->
+            <div class="tab-container">
+                
+                <!-- Tab 1: Geografia -->
+                <div id="tab-content-geo" class="tab-pane active">
+                    <ul class="data-list">
+                        <li><span>Capital</span> <strong id="geo-capital">--</strong></li>
+                        <li><span>População</span> <strong id="geo-population">--</strong></li>
+                        <li><span>Área Territorial</span> <strong id="geo-area">--</strong></li>
+                        <li><span>Fuso Horário</span> <strong id="geo-timezone">--</strong></li>
+                        <li><span>Moeda Corrente</span> <strong id="geo-currency">--</strong></li>
+                        <li><span>Idioma Oficial</span> <strong id="geo-languages">--</strong></li>
+                    </ul>
+                </div>
+
+                <!-- Tab 2: Clima -->
+                <div id="tab-content-weather" class="tab-pane">
+                    <div class="weather-hero">
+                        <img id="we-icon" src="" alt="Weather Icon">
+                        <div class="temp-display">
+                            <h1 id="we-temp">--</h1><span>°C</span>
+                        </div>
+                        <span id="we-description" class="weather-desc">--</span>
+                    </div>
+                    <ul class="data-list grid-list">
+                        <li><div><span>Sensação</span><br><strong id="we-feels">--</strong>°C</div></li>
+                        <li><div><span>Umidade</span><br><strong id="we-humidity">--</strong>%</div></li>
+                        <li><div><span>Vento</span><br><strong id="we-wind">--</strong> km/h</div></li>
+                        <li><div><span>Pressão</span><br><strong id="we-pressure">--</strong> hPa</div></li>
+                    </ul>
+                </div>
+
+                <!-- Tab 3: Analytics -->
+                <div id="tab-content-analytics" class="tab-pane">
+                    <div class="chart-container">
+                        <div class="chart-title">Projeção Térmica (Próximas Horas)</div>
+                        <canvas id="analyticsChart" width="100" height="60"></canvas>
+                    </div>
+                </div>
+
+            </div>
         </div>
+    </aside>
 
-        <div class="box">
-          <span>Temperatura</span>
-          <p id="temperature">-</p>
+    <!-- SIDEBAR DIREITA: WORKSPACE / FAVORITOS -->
+    <aside id="favorites-sidebar" class="sidebar favorites-sidebar glass-panel sidebar-collapsed">
+        <div class="sidebar-header">
+            <div>
+                <h2>Workspace</h2>
+                <span>Gerenciamento de Nós (<span id="fav-count-text">0</span>)</span>
+            </div>
         </div>
+        
+        <div class="fav-sections">
+            <!-- Seção de Favoritos -->
+            <div class="fav-section">
+                <h3><i data-lucide="star"></i> Hubs Sincronizados</h3>
+                <ul id="fav-list-container" class="item-list">
+                    <li class="empty-state">Nenhum hub favoritado</li>
+                </ul>
+            </div>
 
-        <div class="box">
-          <span>Clima</span>
-          <p id="weather">-</p>
+            <!-- Seção de Histórico -->
+            <div class="fav-section">
+                <h3><i data-lucide="clock"></i> Histórico Recente</h3>
+                <ul id="history-list-container" class="item-list">
+                    <li class="empty-state">Nenhum histórico detectado</li>
+                </ul>
+            </div>
         </div>
+    </aside>
 
-      </div>
+    <!-- TOAST NOTIFICATIONS CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
 
-    </div>
+    <!-- DEPENDÊNCIAS DE SCRIPTS EXTERNOS (LEAFLET, CHARTJS, LUCIDE ICONS) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-  </div>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <script src="script.js"></script>
-
+    <!-- Seu arquivo JavaScript local -->
+    <script src="script.js"></script>
+    <script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js");
+    });
+}
+</script>
 </body>
 </html>
