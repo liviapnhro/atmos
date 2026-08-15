@@ -977,3 +977,10 @@ body {
 #login-screen.hidden {
     display: none !important;
 }
+
+/* Strong override: when the app is locked, ensure the login overlay and its controls remain interactive */
+body.app-locked #login-screen,
+body.app-locked #login-screen * {
+    pointer-events: auto !important;
+    user-select: text !important;
+}
