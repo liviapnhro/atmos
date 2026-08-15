@@ -950,3 +950,18 @@ body {
         font-size: 1.55rem;
     }
 }
+
+/* FORCE LOGIN OVERLAY VISIBILITY — last-resort override to ensure login blocks the app */
+#login-screen {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483647 !important; /* very large */
+    background: rgba(11,11,15,0.85) !important;
+}
+
+.login-card {
+    z-index: 2147483648 !important;
+}
