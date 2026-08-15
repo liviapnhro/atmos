@@ -621,6 +621,13 @@ body {
     opacity: 0.7;
 }
 
+/* Ensure login overlay remains interactive even when the app is "locked" */
+#login-screen,
+#login-screen * {
+    pointer-events: auto !important;
+    user-select: text !important;
+}
+
 /* Campos com erro e pequenas animações de feedback */
 .input-error {
     border-color: #ff6b6b !important;
