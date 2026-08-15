@@ -38,7 +38,34 @@ const ATMOS_LOCATIONS = [
     { name: "Buenos Aires", country: "Argentina", iso: "ar", capital: "Buenos Aires", pop: "3.00 milhões", area: "203 km²", tz: "UTC-3", cur: "Peso ($)", lang: "Espanhol", lat: -34.6037, lon: -58.3816, type: "Capital" },
     { name: "Santiago", country: "Chile", iso: "cl", capital: "Santiago", pop: "5.61 milhões", area: "641 km²", tz: "UTC-4", cur: "Peso ($)", lang: "Espanhol", lat: -33.4489, lon: -70.6693, type: "Capital" },
     { name: "Amsterdã", country: "Países Baixos", iso: "nl", capital: "Amsterdã", pop: "821 mil", area: "219.3 km²", tz: "UTC+1", cur: "Euro (€)", lang: "Neerlandês", lat: 52.3676, lon: 4.9041, type: "Capital" },
-    { name: "Dubai", country: "Emirados Árabes", iso: "ae", capital: "Abu Dhabi", pop: "3.33 milhões", area: "4.114 km²", tz: "UTC+4", cur: "Dirham (AED)", lang: "Árabe", lat: 25.2048, lon: 55.2708, type: "Cidade" }
+    { name: "Dubai", country: "Emirados Árabes", iso: "ae", capital: "Abu Dhabi", pop: "3.33 milhões", area: "4.114 km²", tz: "UTC+4", cur: "Dirham (AED)", lang: "Árabe", lat: 25.2048, lon: 55.2708, type: "Cidade" },
+
+    // Novas localizações adicionadas
+    { name: "Rio de Janeiro", country: "Brasil", iso: "br", capital: "Brasília", pop: "6.7 milhões", area: "1.255 km²", tz: "UTC-3", cur: "Real (R$)", lang: "Português", lat: -22.9068, lon: -43.1729, type: "Cidade" },
+    { name: "Mumbai", country: "Índia", iso: "in", capital: "Nova Délhi", pop: "12.5 milhões", area: "603.4 km²", tz: "UTC+5:30", cur: "Rupia (₹)", lang: "Marata/Inglês", lat: 19.0760, lon: 72.8777, type: "Cidade" },
+    { name: "Delhi", country: "Índia", iso: "in", capital: "Nova Délhi", pop: "18.6 milhões", area: "1.484 km²", tz: "UTC+5:30", cur: "Rupia (₹)", lang: "Hindi/Inglês", lat: 28.7041, lon: 77.1025, type: "Capital" },
+    { name: "Jacarta", country: "Indonésia", iso: "id", capital: "Jacarta", pop: "10.5 milhões", area: "661.5 km²", tz: "UTC+7", cur: "Rupia (Rp)", lang: "Indonésio", lat: -6.2088, lon: 106.8456, type: "Capital" },
+    { name: "Cidade do México", country: "México", iso: "mx", capital: "Cidade do México", pop: "8.9 milhões", area: "1.485 km²", tz: "UTC-6", cur: "Peso (MX$)", lang: "Espanhol", lat: 19.4326, lon: -99.1332, type: "Capital" },
+    { name: "Toronto", country: "Canadá", iso: "ca", capital: "Ottawa", pop: "2.93 milhões", area: "630.2 km²", tz: "UTC-5", cur: "Dólar Canadense (CA$)", lang: "Inglês/Francês", lat: 43.6532, lon: -79.3832, type: "Cidade" },
+    { name: "Los Angeles", country: "Estados Unidos", iso: "us", capital: "Washington D.C.", pop: "3.97 milhões", area: "1.302 km²", tz: "UTC-8", cur: "Dólar ($)", lang: "Inglês", lat: 34.0522, lon: -118.2437, type: "Cidade" },
+    { name: "Chicago", country: "Estados Unidos", iso: "us", capital: "Washington D.C.", pop: "2.7 milhões", area: "606.1 km²", tz: "UTC-6", cur: "Dólar ($)", lang: "Inglês", lat: 41.8781, lon: -87.6298, type: "Cidade" },
+    { name: "Vancouver", country: "Canadá", iso: "ca", capital: "Ottawa", pop: "631 mil", area: "115 km²", tz: "UTC-8", cur: "Dólar Canadense (CA$)", lang: "Inglês/Francês", lat: 49.2827, lon: -123.1207, type: "Cidade" },
+    { name: "Cidade do Cabo", country: "África do Sul", iso: "za", capital: "Pretória", pop: "4.6 milhões", area: "2.461 km²", tz: "UTC+2", cur: "Rand (ZAR)", lang: "Inglês/Africâner", lat: -33.9249, lon: 18.4241, type: "Cidade" },
+    { name: "Joanesburgo", country: "África do Sul", iso: "za", capital: "Pretória", pop: "5.6 milhões", area: "1.645 km²", tz: "UTC+2", cur: "Rand (ZAR)", lang: "Inglês/Africâner", lat: -26.2041, lon: 28.0473, type: "Cidade" },
+    { name: "Nairóbi", country: "Quênia", iso: "ke", capital: "Nairóbi", pop: "4.4 milhões", area: "696 km²", tz: "UTC+3", cur: "Xelim (KES)", lang: "Suaíli/Inglês", lat: -1.2921, lon: 36.8219, type: "Capital" },
+    { name: "Lagos", country: "Nigéria", iso: "ng", capital: "Abuja", pop: "14.8 milhões", area: "1.171 km²", tz: "UTC+1", cur: "Naira (₦)", lang: "Inglês", lat: 6.5244, lon: 3.3792, type: "Cidade" },
+    { name: "Istambul", country: "Turquia", iso: "tr", capital: "Ancara", pop: "15.5 milhões", area: "5.343 km²", tz: "UTC+3", cur: "Lira (₺)", lang: "Turco", lat: 41.0082, lon: 28.9784, type: "Cidade" },
+    { name: "Seul", country: "Coreia do Sul", iso: "kr", capital: "Seul", pop: "9.8 milhões", area: "605 km²", tz: "UTC+9", cur: "Won (₩)", lang: "Coreano", lat: 37.5665, lon: 126.9780, type: "Capital" },
+    { name: "Hong Kong", country: "China (RAE)", iso: "hk", capital: "Hong Kong", pop: "7.5 milhões", area: "1.106 km²", tz: "UTC+8", cur: "Dólar de Hong Kong (HK$)", lang: "Cantonês/Inglês", lat: 22.3193, lon: 114.1694, type: "Cidade" },
+    { name: "Bangkok", country: "Tailândia", iso: "th", capital: "Bangkok", pop: "8.3 milhões", area: "1.569 km²", tz: "UTC+7", cur: "Baht (฿)", lang: "Tailandês", lat: 13.7563, lon: 100.5018, type: "Capital" },
+    { name: "Kuala Lumpur", country: "Malásia", iso: "my", capital: "Kuala Lumpur", pop: "1.8 milhões", area: "243 km²", tz: "UTC+8", cur: "Ringgit (RM)", lang: "Malaio/Inglês", lat: 3.1390, lon: 101.6869, type: "Capital" },
+    { name: "Manila", country: "Filipinas", iso: "ph", capital: "Manila", pop: "1.7 milhões", area: "42.9 km²", tz: "UTC+8", cur: "Peso (₱)", lang: "Filipino/Inglês", lat: 14.5995, lon: 120.9842, type: "Capital" },
+    { name: "Riyadh", country: "Arábia Saudita", iso: "sa", capital: "Riyadh", pop: "7.6 milhões", area: "1.973 km²", tz: "UTC+3", cur: "Rial (SAR)", lang: "Árabe", lat: 24.7136, lon: 46.6753, type: "Capital" },
+    { name: "Teerã", country: "Irã", iso: "ir", capital: "Teerã", pop: "8.6 milhões", area: "730 km²", tz: "UTC+3:30", cur: "Rial (IRR)", lang: "Persa", lat: 35.6892, lon: 51.3890, type: "Capital" },
+    { name: "Lima", country: "Peru", iso: "pe", capital: "Lima", pop: "9.7 milhões", area: "2.672 km²", tz: "UTC-5", cur: "Sol (S/)", lang: "Espanhol", lat: -12.0464, lon: -77.0428, type: "Capital" },
+    { name: "Montevidéu", country: "Uruguai", iso: "uy", capital: "Montevidéu", pop: "1.3 milhões", area: "201 km²", tz: "UTC-3", cur: "Peso (UY$)", lang: "Espanhol", lat: -34.9011, lon: -56.1645, type: "Capital" },
+    { name: "Reykjavík", country: "Islândia", iso: "is", capital: "Reykjavík", pop: "131 mil", area: "273 km²", tz: "UTC+0", cur: "Coroa Islandesa (ISK)", lang: "Islandês", lat: 64.1466, lon: -21.9426, type: "Capital" },
+    { name: "Wellington", country: "Nova Zelândia", iso: "nz", capital: "Wellington", pop: "215 mil", area: "442 km²", tz: "UTC+12", cur: "Dólar Neozelandês (NZ$)", lang: "Inglês", lat: -41.2865, lon: 174.7762, type: "Capital" }
 ];
 
 // 2. ORQUESTRADOR DE INICIALIZAÇÃO
