@@ -95,6 +95,10 @@ const Login = {
         this.logged = false;
         document.body.classList.add('app-locked');
         this.screen.classList.remove('hidden');
+        // Ensure overlay is displayed and focusable
+        this.screen.style.display = 'flex';
+        this.screen.tabIndex = -1;
+        setTimeout(() => { try { this.emailInput?.focus(); } catch(e){} }, 120);
 
         const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -138,6 +142,9 @@ const Login = {
             AtmosUI.showToast('Bem-vindo!', 'success');
             if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
 
+            // Remove inline display override to allow CSS hide
+            this.screen.style.display = '';
+
             // Carrega dados iniciais após login
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
         });
@@ -157,6 +164,7 @@ const Login = {
             AtmosUI.showToast('Conta criada — sessão iniciada', 'success');
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
             if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
+            this.screen.style.display = '';
         });
 
         this.toggleBtn?.addEventListener('click', () => {
@@ -170,6 +178,8 @@ const Login = {
             this.logged = false;
             document.body.classList.add('app-locked');
             this.screen.classList.remove('hidden');
+            this.screen.style.display = 'flex';
+            setTimeout(() => { try { this.emailInput?.focus(); } catch(e){} }, 120);
             this.logoutBtn.style.display = 'none';
         });
     }
