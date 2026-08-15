@@ -98,6 +98,13 @@ const Login = {
         // Ensure overlay is displayed and focusable
         this.screen.style.display = 'flex';
         this.screen.tabIndex = -1;
+        // Force pointer-events on overlay and its form controls in case global rules block them
+        try {
+            this.screen.style.pointerEvents = 'auto';
+            if (this.emailInput) { this.emailInput.style.pointerEvents = 'auto'; this.emailInput.disabled = false; this.emailInput.readOnly = false; }
+            if (this.pwdInput) { this.pwdInput.style.pointerEvents = 'auto'; this.pwdInput.disabled = false; this.pwdInput.readOnly = false; }
+            if (this.toggleBtn) this.toggleBtn.style.pointerEvents = 'auto';
+        } catch (e) {}
         setTimeout(() => { try { this.emailInput?.focus(); } catch(e){} }, 120);
 
         const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -145,6 +152,9 @@ const Login = {
             // Remove inline display override to allow CSS hide
             this.screen.style.display = '';
 
+            // clear any inline pointer-events overrides we may have set
+            try { if (this.emailInput) this.emailInput.style.pointerEvents = ''; if (this.pwdInput) this.pwdInput.style.pointerEvents = ''; } catch(e){}
+
             // Carrega dados iniciais após login
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
         });
@@ -165,6 +175,7 @@ const Login = {
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
             if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
             this.screen.style.display = '';
+            try { if (this.emailInput) this.emailInput.style.pointerEvents = ''; if (this.pwdInput) this.pwdInput.style.pointerEvents = ''; } catch(e){}
         });
 
         this.toggleBtn?.addEventListener('click', () => {
@@ -179,6 +190,10 @@ const Login = {
             document.body.classList.add('app-locked');
             this.screen.classList.remove('hidden');
             this.screen.style.display = 'flex';
+            try {
+                if (this.emailInput) { this.emailInput.style.pointerEvents = 'auto'; this.emailInput.disabled = false; this.emailInput.readOnly = false; }
+                if (this.pwdInput) { this.pwdInput.style.pointerEvents = 'auto'; this.pwdInput.disabled = false; this.pwdInput.readOnly = false; }
+            } catch(e){}
             setTimeout(() => { try { this.emailInput?.focus(); } catch(e){} }, 120);
             this.logoutBtn.style.display = 'none';
         });
