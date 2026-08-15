@@ -67,6 +67,7 @@ const Login = {
         this.createBtn = document.querySelector('.create-account button');
         this.emailInput = document.getElementById('login-email');
         this.pwdInput = document.getElementById('login-password');
+        this.logoutBtn = document.getElementById('logout-btn');
 
         const logged = localStorage.getItem('atmos_logged_in') === '1';
         if (!logged) {
@@ -74,6 +75,7 @@ const Login = {
             this.screen.classList.remove('hidden');
         } else {
             this.screen.classList.add('hidden');
+            if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
         }
 
         const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -117,6 +119,8 @@ const Login = {
             this.screen.classList.add('hidden');
             AtmosUI.showToast('Bem-vindo!', 'success');
 
+            if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
+
             // Carrega dados iniciais após login
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
         });
@@ -135,6 +139,7 @@ const Login = {
             this.screen.classList.add('hidden');
             AtmosUI.showToast('Conta criada — sessão iniciada', 'success');
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
+            if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
         });
 
         this.toggleBtn?.addEventListener('click', () => {
@@ -142,6 +147,13 @@ const Login = {
             if (!pwd) return;
             if (pwd.type === 'password') { pwd.type = 'text'; this.toggleBtn.setAttribute('aria-label','Ocultar senha'); }
             else { pwd.type = 'password'; this.toggleBtn.setAttribute('aria-label','Mostrar senha'); }
+        });
+
+        this.logoutBtn?.addEventListener('click', () => {
+            localStorage.removeItem('atmos_logged_in');
+            document.body.classList.add('app-locked');
+            this.screen.classList.remove('hidden');
+            this.logoutBtn.style.display = 'none';
         });
     }
 };
