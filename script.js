@@ -101,9 +101,15 @@ const Login = {
         // Force pointer-events on overlay and its form controls in case global rules block them
         try {
             this.screen.style.pointerEvents = 'auto';
-            if (this.emailInput) { this.emailInput.style.pointerEvents = 'auto'; this.emailInput.disabled = false; this.emailInput.readOnly = false; }
-            if (this.pwdInput) { this.pwdInput.style.pointerEvents = 'auto'; this.pwdInput.disabled = false; this.pwdInput.readOnly = false; }
-            if (this.toggleBtn) this.toggleBtn.style.pointerEvents = 'auto';
+            const controls = this.screen.querySelectorAll('input, button, textarea');
+            controls.forEach(el => {
+                try {
+                    el.style.setProperty('pointer-events', 'auto', 'important');
+                    el.style.setProperty('user-select', 'text', 'important');
+                    el.disabled = false;
+                    el.readOnly = false;
+                } catch (e) {}
+            });
         } catch (e) {}
         setTimeout(() => { try { this.emailInput?.focus(); } catch(e){} }, 120);
 
@@ -153,7 +159,10 @@ const Login = {
             this.screen.style.display = '';
 
             // clear any inline pointer-events overrides we may have set
-            try { if (this.emailInput) this.emailInput.style.pointerEvents = ''; if (this.pwdInput) this.pwdInput.style.pointerEvents = ''; } catch(e){}
+            try { 
+                const controls = this.screen.querySelectorAll('input, button, textarea');
+                controls.forEach(el => { try { el.style.removeProperty('pointer-events'); el.style.removeProperty('user-select'); } catch(e){} });
+            } catch(e){}
 
             // Carrega dados iniciais após login
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
@@ -175,7 +184,10 @@ const Login = {
             AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
             if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
             this.screen.style.display = '';
-            try { if (this.emailInput) this.emailInput.style.pointerEvents = ''; if (this.pwdInput) this.pwdInput.style.pointerEvents = ''; } catch(e){}
+            try { 
+                const controls = this.screen.querySelectorAll('input, button, textarea');
+                controls.forEach(el => { try { el.style.removeProperty('pointer-events'); el.style.removeProperty('user-select'); } catch(e){} });
+            } catch(e){}
         });
 
         this.toggleBtn?.addEventListener('click', () => {
@@ -191,8 +203,15 @@ const Login = {
             this.screen.classList.remove('hidden');
             this.screen.style.display = 'flex';
             try {
-                if (this.emailInput) { this.emailInput.style.pointerEvents = 'auto'; this.emailInput.disabled = false; this.emailInput.readOnly = false; }
-                if (this.pwdInput) { this.pwdInput.style.pointerEvents = 'auto'; this.pwdInput.disabled = false; this.pwdInput.readOnly = false; }
+                const controls = this.screen.querySelectorAll('input, button, textarea');
+                controls.forEach(el => {
+                    try {
+                        el.style.setProperty('pointer-events', 'auto', 'important');
+                        el.style.setProperty('user-select', 'text', 'important');
+                        el.disabled = false;
+                        el.readOnly = false;
+                    } catch(e){}
+                });
             } catch(e){}
             setTimeout(() => { try { this.emailInput?.focus(); } catch(e){} }, 120);
             this.logoutBtn.style.display = 'none';
