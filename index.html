@@ -20,6 +20,88 @@
 </head>
 <body>
 
+ <div id="login-screen">
+    <div class="login-card">
+
+    <div class="login-header">
+    <h1>Bem-vindo ao ATMOS V2</h1>
+    <p>Por favor, faça login para acessar o sistema.</p>
+</div>
+
+
+
+        <form id="login-form">
+
+            <div class="input-group">
+                <label for="login-email">E-mail</label>
+
+                <div class="input-wrapper">
+                    <i data-lucide="mail"></i>
+                    <input
+                        type="email"
+                        id="login-email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="login-password">Senha</label>
+
+                <div class="input-wrapper">
+                    <i data-lucide="lock"></i>
+
+                    <input
+                        type="password"
+                        id="login-password"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="toggle-password"
+                        class="password-toggle"
+                        aria-label="Mostrar senha"
+                    >
+                        <i data-lucide="eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="login-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember-me">
+                    <span>Lembrar de mim</span>
+                </label>
+
+                <button type="button" class="forgot-password">
+                    Esqueci minha senha
+                </button>
+            </div>
+
+            <button type="submit" id="login-button" class="login-submit">
+                <span>Entrar</span>
+                <i data-lucide="arrow-right"></i>
+            </button>
+
+        </form>
+
+        <div class="login-divider">
+            <span>ou</span>
+        </div>
+
+        <p class="create-account">
+            Ainda não possui uma conta?
+            <button type="button">Criar conta</button>
+        </p>
+
+    </div>
+</div>
+
     <!-- MAPA CORE -->
     <div id="map"></div>
 

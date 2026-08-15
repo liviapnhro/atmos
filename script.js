@@ -49,9 +49,102 @@ document.addEventListener("DOMContentLoaded", () => {
     AtmosFavorites.init();
     AtmosUI.setupTabs();
     
-    // Inicializa o sistema focando em São Paulo por padrão
-    AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
+    // Inicializa o subsistema de login/controle de acesso
+    Login.init();
+
+    // Se já estiver logado, carrega localização padrão
+    if (localStorage.getItem('atmos_logged_in') === '1') {
+        AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
+    }
 });
+
+// 8. SISTEMA DE LOGIN (BÁSICO, CLIENT-SIDE)
+const Login = {
+    init() {
+        this.screen = document.getElementById('login-screen');
+        this.form = document.getElementById('login-form');
+        this.toggleBtn = document.getElementById('toggle-password');
+        this.createBtn = document.querySelector('.create-account button');
+        this.emailInput = document.getElementById('login-email');
+        this.pwdInput = document.getElementById('login-password');
+
+        const logged = localStorage.getItem('atmos_logged_in') === '1';
+        if (!logged) {
+            document.body.classList.add('app-locked');
+            this.screen.classList.remove('hidden');
+        } else {
+            this.screen.classList.add('hidden');
+        }
+
+        const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        const clearFieldError = (el) => {
+            if (!el) return;
+            el.classList.remove('input-error', 'shake');
+            const next = el.parentNode.querySelector('.field-error');
+            if (next) next.remove();
+        };
+
+        const showFieldError = (el, msg) => {
+            if (!el) return;
+            clearFieldError(el);
+            el.classList.add('input-error', 'shake');
+            const error = document.createElement('div');
+            error.className = 'field-error';
+            error.textContent = msg;
+            el.parentNode.appendChild(error);
+            setTimeout(() => el.classList.remove('shake'), 350);
+        };
+
+        [this.emailInput, this.pwdInput].forEach(inp => {
+            if (!inp) return;
+            inp.addEventListener('input', () => clearFieldError(inp));
+        });
+
+        this.form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = this.emailInput?.value.trim() || '';
+            const pass = this.pwdInput?.value.trim() || '';
+
+            if (!email) { showFieldError(this.emailInput, 'Preencha o e-mail'); AtmosUI.showToast('E-mail obrigatório', 'info'); return; }
+            if (!validateEmail(email)) { showFieldError(this.emailInput, 'E-mail inválido'); AtmosUI.showToast('Formato de e-mail inválido', 'info'); return; }
+            if (!pass) { showFieldError(this.pwdInput, 'Preencha a senha'); AtmosUI.showToast('Senha obrigatória', 'info'); return; }
+            if (pass.length < 6) { showFieldError(this.pwdInput, 'A senha deve ter ao menos 6 caracteres'); AtmosUI.showToast('Senha muito curta', 'info'); return; }
+
+            // Marca sessão local como autenticada (apenas cliente)
+            localStorage.setItem('atmos_logged_in', '1');
+            document.body.classList.remove('app-locked');
+            this.screen.classList.add('hidden');
+            AtmosUI.showToast('Bem-vindo!', 'success');
+
+            // Carrega dados iniciais após login
+            AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
+        });
+
+        this.createBtn?.addEventListener('click', () => {
+            const email = this.emailInput?.value.trim() || '';
+            const pass = this.pwdInput?.value.trim() || '';
+            if (!email) { showFieldError(this.emailInput, 'Preencha o e-mail'); return; }
+            if (!validateEmail(email)) { showFieldError(this.emailInput, 'E-mail inválido'); return; }
+            if (!pass) { showFieldError(this.pwdInput, 'Preencha a senha'); return; }
+            if (pass.length < 6) { showFieldError(this.pwdInput, 'A senha deve ter ao menos 6 caracteres'); return; }
+
+            // Simula criação e login
+            localStorage.setItem('atmos_logged_in', '1');
+            document.body.classList.remove('app-locked');
+            this.screen.classList.add('hidden');
+            AtmosUI.showToast('Conta criada — sessão iniciada', 'success');
+            AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
+        });
+
+        this.toggleBtn?.addEventListener('click', () => {
+            const pwd = this.pwdInput;
+            if (!pwd) return;
+            if (pwd.type === 'password') { pwd.type = 'text'; this.toggleBtn.setAttribute('aria-label','Ocultar senha'); }
+            else { pwd.type = 'password'; this.toggleBtn.setAttribute('aria-label','Mostrar senha'); }
+        });
+    }
+};
 
 // 3. CORE ENGINE (INTEGRAÇÃO COM OPEN-METEO SEM KEY)
 const AtmosEngine = {
