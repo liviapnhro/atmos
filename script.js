@@ -51,11 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Inicializa o subsistema de login/controle de acesso
     Login.init();
-
-    // Se já estiver logado, carrega localização padrão
-    if (localStorage.getItem('atmos_logged_in') === '1') {
-        AtmosEngine.loadLocation("São Paulo", -23.5505, -46.6333);
-    }
 });
 
 // 8. SISTEMA DE LOGIN (BÁSICO, CLIENT-SIDE)
@@ -69,14 +64,10 @@ const Login = {
         this.pwdInput = document.getElementById('login-password');
         this.logoutBtn = document.getElementById('logout-btn');
 
-        const logged = localStorage.getItem('atmos_logged_in') === '1';
-        if (!logged) {
-            document.body.classList.add('app-locked');
-            this.screen.classList.remove('hidden');
-        } else {
-            this.screen.classList.add('hidden');
-            if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
-        }
+        // Sempre exigir login ao carregar a página — sem persistência em storage
+        this.logged = false;
+        document.body.classList.add('app-locked');
+        this.screen.classList.remove('hidden');
 
         const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -113,12 +104,11 @@ const Login = {
             if (!pass) { showFieldError(this.pwdInput, 'Preencha a senha'); AtmosUI.showToast('Senha obrigatória', 'info'); return; }
             if (pass.length < 6) { showFieldError(this.pwdInput, 'A senha deve ter ao menos 6 caracteres'); AtmosUI.showToast('Senha muito curta', 'info'); return; }
 
-            // Marca sessão local como autenticada (apenas cliente)
-            localStorage.setItem('atmos_logged_in', '1');
+            // Marca sessão ativa (apenas em memória)
+            this.logged = true;
             document.body.classList.remove('app-locked');
             this.screen.classList.add('hidden');
             AtmosUI.showToast('Bem-vindo!', 'success');
-
             if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
 
             // Carrega dados iniciais após login
@@ -133,8 +123,8 @@ const Login = {
             if (!pass) { showFieldError(this.pwdInput, 'Preencha a senha'); return; }
             if (pass.length < 6) { showFieldError(this.pwdInput, 'A senha deve ter ao menos 6 caracteres'); return; }
 
-            // Simula criação e login
-            localStorage.setItem('atmos_logged_in', '1');
+            // Simula criação e login em memória (não persistente)
+            this.logged = true;
             document.body.classList.remove('app-locked');
             this.screen.classList.add('hidden');
             AtmosUI.showToast('Conta criada — sessão iniciada', 'success');
@@ -150,7 +140,7 @@ const Login = {
         });
 
         this.logoutBtn?.addEventListener('click', () => {
-            localStorage.removeItem('atmos_logged_in');
+            this.logged = false;
             document.body.classList.add('app-locked');
             this.screen.classList.remove('hidden');
             this.logoutBtn.style.display = 'none';
