@@ -972,3 +972,8 @@ body {
 .login-card {
     z-index: 2147483648 !important;
 }
+
+/* Allow JS to hide the overlay by adding .hidden (higher specificity than the override) */
+#login-screen.hidden {
+    display: none !important;
+}
